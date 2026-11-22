@@ -1,0 +1,31 @@
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+Battle/
+*.obj
+*.pdb
+*.exe
+*.dll
+*.ilk
+*.tlog
+*.log
+*.recipe
+*.resources
+*.metagen
+*.lastbuildstate
+*.cache
+*.FileListAbsolute.txt
+*.AssemblyAttributes.cpp
+
+# Archivos temporales y comprimidos
+~$*
+*.zip
