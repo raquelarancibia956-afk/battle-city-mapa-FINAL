@@ -129,13 +129,18 @@
     <ClCompile Include="CColeccionEnemigo.cpp" />
     <ClCompile Include="CFabricaEnemigo.cpp" />
     <ClCompile Include="CJuegoFacade.cpp" />
+    <ClCompile Include="CMarcadorObserver.cpp" />
+    <ClCompile Include="EstadosTanque.cpp" />
     <ClCompile Include="FEnemigoM.cpp" />
     <ClCompile Include="Mapa.cpp" />
     <ClCompile Include="Controladora.cpp" />
     <ClCompile Include="Enemigo.cpp" />
+    <ClCompile Include="EstrategiaAleatoria.cpp" />
+    <ClCompile Include="EstrategiaPerseguir.cpp" />
     <ClCompile Include="Juego.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="Powerup.cpp" />
+    <ClCompile Include="Proyectil.cpp" />
     <ClCompile Include="Tanque.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,16 +148,25 @@
     <ClInclude Include="CColeccionEnemigo.h" />
     <ClInclude Include="CFabricaEnemigo.h" />
     <ClInclude Include="CJuegoFacade.h" />
+    <ClInclude Include="CMarcadorObserver.h" />
     <ClInclude Include="Comun.h" />
+    <ClInclude Include="CSujetoJuego.h" />
+    <ClInclude Include="EstadosTanque.h" />
     <ClInclude Include="FEnemigoM.h" />
+    <ClInclude Include="IEstadoTanque.h" />
+    <ClInclude Include="IObservadorJuego.h" />
     <ClInclude Include="Mapa.h" />
     <ClInclude Include="Controladora.h" />
     <ClInclude Include="Enemigo.h" />
+    <ClInclude Include="EstrategiaAleatoria.h" />
+    <ClInclude Include="EstrategiaPerseguir.h" />
+    <ClInclude Include="IEstrategiaMovimiento.h" />
     <ClInclude Include="Juego.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Powerup.h" />
+    <ClInclude Include="Proyectil.h" />
     <ClInclude Include="Tanque.h" />
   </ItemGroup>
   <ItemGroup>

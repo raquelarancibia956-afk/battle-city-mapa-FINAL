@@ -3,6 +3,7 @@
 #include "Tanque.h"
 
 class CMapa;
+class CColeccionEnemigo;
 
 class CJugador : public CTanque {
 	std::string nombre;
@@ -17,6 +18,6 @@ public:
 	void dibujar(Graphics^ g, Bitmap^ bmpTanques) override;
 	void mover();
 	void mover(CMapa* mapa);
-	void mover(EDireccion direccion, CMapa* mapa = nullptr);
-	bool puedeMover(int nuevoX, int nuevoY, CMapa* mapa);
+	void mover(EDireccion direccion, CMapa* mapa = nullptr, CColeccionEnemigo* enemigos = nullptr);
+	bool puedeMover(int nuevoX, int nuevoY, CMapa* mapa, CColeccionEnemigo* enemigos = nullptr);
 };

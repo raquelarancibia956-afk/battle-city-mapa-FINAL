@@ -1,5 +1,6 @@
 #include "Jugador.h"
 #include "Mapa.h"
+#include "CColeccionEnemigo.h"
 
 CJugador::CJugador(short id, int posX, int posY, int vidas) : CTanque(id, posX, posY, vidas) {
 	this->nombre = "Jugador 1";
@@ -24,7 +25,7 @@ void CJugador::dibujar(Graphics^ g, Bitmap^ bmpTanques) {
 	dibujarSprite(g, bmpTanques, FILA_JUGADOR, 0);
 }
 
-bool CJugador::puedeMover(int nuevoX, int nuevoY, CMapa* mapa) {
+bool CJugador::puedeMover(int nuevoX, int nuevoY, CMapa* mapa, CColeccionEnemigo* enemigos) {
 	// Límites del mapa en pantalla (13 x 13 bloques de 64x64)
 	if (nuevoX < 0 || nuevoY < 0) return false;
 	if (nuevoX + ANCHO_TANQUE > MAX_COLUMNAS * ANCHO_IMAGEN) return false;
@@ -41,17 +42,32 @@ bool CJugador::puedeMover(int nuevoX, int nuevoY, CMapa* mapa) {
 				CBloque* b = mapa->getBloque(f, c);
 				if (b == nullptr) return false;
 				ETipoBloque tipo = b->getTipo();
-				// Solo piso y árbol son transitables para el tanque
-				if (tipo != ETipoBloque::piso && tipo != ETipoBloque::arbol) {
+				// Solo piso y trofeo son transitables para el jugador
+				if (tipo != ETipoBloque::piso && tipo != ETipoBloque::trofeo) {
 					return false;
 				}
 			}
 		}
 	}
+
+	// Evitar superposición con tanques enemigos
+	if (enemigos != nullptr) {
+		for (int i = 0; i < enemigos->cantidad(); i++) {
+			CEnemigo* e = enemigos->obtener(i);
+			if (e != nullptr &&
+				nuevoX < e->getX() + ANCHO_TANQUE &&
+				nuevoX + ANCHO_TANQUE > e->getX() &&
+				nuevoY < e->getY() + ALTO_TANQUE &&
+				nuevoY + ALTO_TANQUE > e->getY()) {
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 
-void CJugador::mover(EDireccion direccion, CMapa* mapa) {
+void CJugador::mover(EDireccion direccion, CMapa* mapa, CColeccionEnemigo* enemigos) {
 	this->setDireccion(direccion);
 
 	int vel = this->getVelocidad();
@@ -62,10 +78,10 @@ void CJugador::mover(EDireccion direccion, CMapa* mapa) {
 	if (direccion == EDireccion::arriba || direccion == EDireccion::abajo) {
 		int restoX = actX % ANCHO_IMAGEN;
 		if (restoX != 0) {
-			if (restoX <= vel && puedeMover(actX - restoX, actY, mapa)) {
+			if (restoX <= vel && puedeMover(actX - restoX, actY, mapa, enemigos)) {
 				actX -= restoX;
 				this->setX(actX);
-			} else if ((ANCHO_IMAGEN - restoX) <= vel && puedeMover(actX + (ANCHO_IMAGEN - restoX), actY, mapa)) {
+			} else if ((ANCHO_IMAGEN - restoX) <= vel && puedeMover(actX + (ANCHO_IMAGEN - restoX), actY, mapa, enemigos)) {
 				actX += (ANCHO_IMAGEN - restoX);
 				this->setX(actX);
 			}
@@ -73,10 +89,10 @@ void CJugador::mover(EDireccion direccion, CMapa* mapa) {
 	} else if (direccion == EDireccion::izquierda || direccion == EDireccion::derecha) {
 		int restoY = actY % ALTO_IMAGEN;
 		if (restoY != 0) {
-			if (restoY <= vel && puedeMover(actX, actY - restoY, mapa)) {
+			if (restoY <= vel && puedeMover(actX, actY - restoY, mapa, enemigos)) {
 				actY -= restoY;
 				this->setY(actY);
-			} else if ((ALTO_IMAGEN - restoY) <= vel && puedeMover(actX, actY + (ALTO_IMAGEN - restoY), mapa)) {
+			} else if ((ALTO_IMAGEN - restoY) <= vel && puedeMover(actX, actY + (ALTO_IMAGEN - restoY), mapa, enemigos)) {
 				actY += (ALTO_IMAGEN - restoY);
 				this->setY(actY);
 			}
@@ -96,7 +112,7 @@ void CJugador::mover(EDireccion direccion, CMapa* mapa) {
 	for (int i = 0; i < vel; i++) {
 		int proxX = this->getX() + dx;
 		int proxY = this->getY() + dy;
-		if (puedeMover(proxX, proxY, mapa)) {
+		if (puedeMover(proxX, proxY, mapa, enemigos)) {
 			this->setX(proxX);
 			this->setY(proxY);
 		} else {
@@ -106,9 +122,9 @@ void CJugador::mover(EDireccion direccion, CMapa* mapa) {
 }
 
 void CJugador::mover(CMapa* mapa) {
-	mover(this->getDireccion(), mapa);
+	mover(this->getDireccion(), mapa, nullptr);
 }
 
 void CJugador::mover() {
-	mover(this->getDireccion(), nullptr);
+	mover(this->getDireccion(), nullptr, nullptr);
 }

@@ -1,5 +1,7 @@
 #include "CColeccionEnemigo.h"
 #include "Comun.h"
+#include "EstrategiaPerseguir.h"
+#include "EstrategiaAleatoria.h"
 
 CColeccionEnemigo::CColeccionEnemigo() {
 	siguienteId = 100;
@@ -21,6 +23,12 @@ void CColeccionEnemigo::crearVarios(CFabricaEnemigo* fabrica, int cantidad, CMap
 		for (int j = 0; j < MAX_COLUMNAS && creados < cantidad; j += 4) {
 			if (mapa->getBloque(i, j)->getTipo() == ETipoBloque::piso) {
 				crear(fabrica, j * ANCHO_IMAGEN, i * ALTO_IMAGEN);
+				CEnemigo* nuevo = enemigos.back();
+				if (creados % 2 == 0) {
+					nuevo->setEstrategia(new EstrategiaPerseguir());
+				} else {
+					nuevo->setEstrategia(new EstrategiaAleatoria());
+				}
 				creados++;
 			}
 		}

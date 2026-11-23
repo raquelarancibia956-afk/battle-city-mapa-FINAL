@@ -7,6 +7,10 @@ CBloque::CBloque(ETipoBloque tipo, int durabilidad) {
 
 CBloque::~CBloque() {}
 
+void CBloque::setTipo(ETipoBloque tipo) {
+	this->tipo = tipo;
+}
+
 ETipoBloque CBloque::getTipo() {
 	return this->tipo;
 }

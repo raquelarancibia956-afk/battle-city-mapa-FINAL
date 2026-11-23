@@ -1,5 +1,6 @@
 #pragma once
 #include "Comun.h"
+#include "IEstadoTanque.h"
 
 using namespace System::Drawing;
 
@@ -13,6 +14,7 @@ class CTanque {
 	int posX;
 	int posY;
 	short powerups[99];
+	IEstadoTanque* estado;
 protected:
 	/// /////////////////////////////
 	void dibujarSprite(Graphics^ g, Bitmap^ bmpTanques, int filaBase, int columna);
@@ -32,6 +34,8 @@ public:
 	short getVelocidad();
 	int getX();
 	int getY();
+	void setEstado(IEstadoTanque* nuevoEstado);
+	IEstadoTanque* getEstado();
 
 	bool puedeMover(int nuevoX, int nuevoY, CMapa* mapa);
 	/// ///////////////////////////

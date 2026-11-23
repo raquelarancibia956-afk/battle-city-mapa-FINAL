@@ -2,7 +2,7 @@
 #include "FEnemigoM.h"
 
 CControladora::CControladora() {
-	mapa = new CMapa();
+	mapa = CMapa::getInstancia();
 	jugador = new CJugador(1, 4 * ANCHO_IMAGEN, 12 * ALTO_IMAGEN, 3);
 	enemigos = new CColeccionEnemigo();
 
@@ -45,7 +45,7 @@ void CControladora::Actualizar() {
 
 void CControladora::MoverJugador(EDireccion direccion) {
 	if (jugador != nullptr) {
-		jugador->mover(direccion, mapa);
+		jugador->mover(direccion, mapa, enemigos);
 	}
 }
 

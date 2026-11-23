@@ -1,7 +1,22 @@
 #include "Mapa.h"
 
+CMapa* CMapa::instancia = nullptr;
+
 CMapa::CMapa() {
-};
+    this->nivel = 1;
+    for (int i = 0; i < MAX_FILAS; i++) {
+        for (int j = 0; j < MAX_COLUMNAS; j++) {
+            mapa[i][j] = nullptr;
+        }
+    }
+}
+
+CMapa* CMapa::getInstancia() {
+    if (instancia == nullptr) {
+        instancia = new CMapa();
+    }
+    return instancia;
+}
 
 void CMapa::setNivel(int nivel) {
     this->nivel = nivel;
@@ -110,7 +125,7 @@ void CMapa::nivel3() {
             case 2: mapa[i][j] = new CBloque(ETipoBloque::destruible, 2); break;
             case 3: mapa[i][j] = new CBloque(ETipoBloque::noDestruible, -1); break;
             case 4: mapa[i][j] = new CBloque(ETipoBloque::agua, -1); break;
-            case 5: mapa[i][j] = new CBloque(ETipoBloque::arbol, -1); break;
+            case 5: mapa[i][j] = new CBloque(ETipoBloque::arbol, 1); break;
             case 9: mapa[i][j] = new CBloque(ETipoBloque::trofeo, 1); break;
             }
         }
@@ -141,7 +156,7 @@ void CMapa::nivel4() {
             case 2: mapa[i][j] = new CBloque(ETipoBloque::destruible, 2); break;
             case 3: mapa[i][j] = new CBloque(ETipoBloque::noDestruible, -1); break;
             case 4: mapa[i][j] = new CBloque(ETipoBloque::agua, -1); break;
-            case 5: mapa[i][j] = new CBloque(ETipoBloque::arbol, -1); break;
+            case 5: mapa[i][j] = new CBloque(ETipoBloque::arbol, 1); break;
             case 9: mapa[i][j] = new CBloque(ETipoBloque::trofeo, 1); break;
             }
         }
@@ -173,7 +188,7 @@ void CMapa::nivel5() {
             case 2: mapa[i][j] = new CBloque(ETipoBloque::destruible, 2); break;
             case 3: mapa[i][j] = new CBloque(ETipoBloque::noDestruible, -1); break;
             case 4: mapa[i][j] = new CBloque(ETipoBloque::agua, -1); break;
-            case 5: mapa[i][j] = new CBloque(ETipoBloque::arbol, -1); break;
+            case 5: mapa[i][j] = new CBloque(ETipoBloque::arbol, 1); break;
             case 9: mapa[i][j] = new CBloque(ETipoBloque::trofeo, 1); break;
             }
         }

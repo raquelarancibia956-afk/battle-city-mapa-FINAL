@@ -7,10 +7,11 @@ class CBloque {
 	ETipoBloque tipo;
 	short durabilidad;
 
-  public:
+public:
 	CBloque(ETipoBloque tipo, int dureza);
 	~CBloque();
 
+	void setTipo(ETipoBloque tipo);
 	ETipoBloque getTipo();
 	void setDurabilidad(short durabilidad);
 	short getDurabilidad();

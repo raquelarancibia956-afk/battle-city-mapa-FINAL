@@ -5,11 +5,16 @@
 using namespace System::Drawing;
 
 class CMapa {
+  static CMapa* instancia;
   CBloque* mapa[MAX_FILAS][MAX_COLUMNAS];
   int nivel;
 
+  CMapa();
+  CMapa(const CMapa&) = delete;
+  void operator=(const CMapa&) = delete;
+
   public:
-	CMapa();
+	static CMapa* getInstancia();
 	void setNivel(int nivel);
 	int getNivel();
 	CBloque* getBloque(int i, int j);

@@ -1,16 +1,33 @@
 #include "Tanque.h"
 #include "Mapa.h"
+#include "EstadosTanque.h"
 
 CTanque::CTanque(short id, int posX, int posY, int vidas) {
 	this->id = id;
 	this->vidas = vidas;
-	this->velocidad = 10;
+	this->velocidad = 20;
 	this->posX = posX;
 	this->posY = posY;
 	this->direccion = EDireccion::arriba;
+	this->estado = new EstadoNormal();
 }
 
-CTanque::~CTanque() {}
+CTanque::~CTanque() {
+	delete estado;
+	estado = nullptr;
+}
+
+void CTanque::setEstado(IEstadoTanque* nuevoEstado) {
+	if (nuevoEstado != nullptr && nuevoEstado != this->estado) {
+		delete this->estado;
+		this->estado = nuevoEstado;
+		this->estado->aplicar(this);
+	}
+}
+
+IEstadoTanque* CTanque::getEstado() {
+	return this->estado;
+}
 
 void CTanque::setId(short id) {
 	this->id = id;
@@ -84,7 +101,7 @@ bool CTanque::puedeMover(int nuevoX, int nuevoY, CMapa* mapa) {
 				CBloque* b = mapa->getBloque(f, c);
 				if (b == nullptr) return false;
 				ETipoBloque tipo = b->getTipo();
-				if (tipo != ETipoBloque::piso && tipo != ETipoBloque::arbol) {
+				if (tipo != ETipoBloque::piso) {
 					return false;
 				}
 			}
